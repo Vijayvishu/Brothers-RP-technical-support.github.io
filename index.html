@@ -1,56 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Game Technical Support</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 50px;
-        }
-        .box {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 10px;
-            width: 60%;
-            margin: auto;
-        }
-        input, textarea {
-            width: 80%;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-            border: none;
-        }
-        button {
-            padding: 10px 20px;
-            background: #38bdf8;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #0ea5e9;
-        }
-    </style>
+<title>Brothers RP Support</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+    text-align:center;
+}
+.container {
+    margin-top:50px;
+    padding:20px;
+}
+input, textarea {
+    width:90%;
+    max-width:400px;
+    padding:12px;
+    margin:10px;
+    border-radius:8px;
+    border:none;
+}
+button {
+    padding:12px 25px;
+    background:#38bdf8;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+}
+button:hover {
+    background:#0ea5e9;
+}
+.card {
+    background:#1e293b;
+    padding:30px;
+    border-radius:15px;
+    display:inline-block;
+}
+footer {
+    margin-top:50px;
+    font-size:14px;
+    opacity:0.7;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>🎮 Game Technical Support</h1>
+<div class="container">
+    <h1>🎮 Brothers RP Technical Support</h1>
 
-    <div class="box">
-        <h2>Submit Your Issue</h2>
-
-        <input type="text" placeholder="Your Name"><br>
-        <input type="email" placeholder="Your Email"><br>
-        <textarea rows="5" placeholder="Describe your problem"></textarea><br>
-
-        <button>Submit</button>
+    <div class="card">
+        <h2>Submit a Ticket</h2>
+        <input id="name" placeholder="Your Name"><br>
+        <input id="email" type="email" placeholder="Your Email"><br>
+        <textarea id="issue" rows="5" placeholder="Describe your issue"></textarea><br>
+        <button onclick="sendTicket()">Submit</button>
     </div>
 
-    <p>© 2026 Your Game Support</p>
+    <footer>
+        © 2026 Brothers RP | Official Support
+    </footer>
+</div>
+
+<script>
+function sendTicket(){
+    const webhook = "PASTE_YOUR_DISCORD_WEBHOOK_HERE";
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const issue = document.getElementById("issue").value;
+
+    if(!name || !email || !issue){
+        alert("Please fill all fields!");
+        return;
+    }
+
+    fetch(webhook, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            content: "🎫 **New Brothers RP Ticket**\n\nName: " + name + 
+                     "\nEmail: " + email + 
+                     "\nIssue: " + issue
+        })
+    }).then(() => {
+        alert("Ticket submitted successfully!");
+        document.getElementById("name").value="";
+        document.getElementById("email").value="";
+        document.getElementById("issue").value="";
+    }).catch(() => alert("Error sending ticket"));
+}
+</script>
 
 </body>
 </html>
